@@ -29,30 +29,51 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
-def score(dice)
-  dice_s = dice.join()
+# def score(dice)
+#   dice_s = dice.join()
 
+#   score = 0
+
+#   if dice_s.include? "111"
+#     score += 1000
+#     dice_s.slice! "111"
+#   end
+
+#   triplet_pattern = /(222)|(333)|(444)|(555)|(666)/
+#   if match = dice_s.match(triplet_pattern)
+#     score += match.to_s[0].to_i * 100
+#     dice_s.slice! triplet_pattern
+#   end
+
+#   while dice_s.include? "1"
+#     score += 100
+#     dice_s.slice! "1"
+#   end
+#   while dice_s.include? "5"
+#     score += 50
+#     dice_s.slice! "5"
+#   end
+
+#   score
+# end
+
+def score(dice) 
   score = 0
 
-  if dice_s.include? "111"
-    score += 1000
-    dice_s.slice! "111"
+  counts = Hash.new 0
+  dice.each { |v| counts[v] += 1 }
+
+  counts.each_pair do |val, count|
+    if count >= 3
+      score += val == 1 ? 1000 : val * 100
+      counts[val] -= 3
+    end
   end
 
-  triplet_pattern = /(222)|(333)|(444)|(555)|(666)/
-  if match = dice_s.match(triplet_pattern)
-    score += match.to_s[0].to_i * 100
-    dice_s.slice! pattern
-  end
+  score += counts[1] * 100
+  score += counts[5] * 50
 
-  while dice_s.include? "1"
-    score += 100
-    dice_s.slice! "1"
-  end
-  while dice_s.include? "5"
-    score += 50
-    dice_s.slice! "5"
-  end
+  score
 end
 
 class AboutScoringProject < Neo::Koan
