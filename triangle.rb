@@ -14,12 +14,14 @@
 #   about_triangle_project_2.rb
 #
 
-require 'set'
-
 def triangle(a, b, c)
-  vertices_unique = Set.new [a, b, c]
+  vertices = [a, b, c].sort
 
-  case vertices_unique.size
+  if vertices.first <= 0 || vertices[0..-2].sum <= vertices.last
+    raise TriangleError
+  end
+
+  case vertices.uniq.size
   when 1 then :equilateral
   when 2 then :isosceles
   when 3 then :scalene
