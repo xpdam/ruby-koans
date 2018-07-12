@@ -29,6 +29,10 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
+# NOTE: The commented-out code below is the result of a misunderstanding
+#       of the requirements, as I thought that order of the results
+#       mattered. The correct code is below the commented out part.
+#
 # def score(dice)
 #   dice_s = dice.join()
 
